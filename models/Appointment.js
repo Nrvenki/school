@@ -1,4 +1,3 @@
-// models/Appointment.js
 const mongoose = require('mongoose');
 
 const appointmentSchema = new mongoose.Schema({
@@ -11,6 +10,4 @@ const appointmentSchema = new mongoose.Schema({
   time: { type: String, required: true },
 }, { timestamps: true });
 
-const Appointment = mongoose.model('Appointment', appointmentSchema);
-
-module.exports = Appointment;
+module.exports = mongoose.model('Appointment', appointmentSchema);

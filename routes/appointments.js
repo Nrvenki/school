@@ -1,33 +1,16 @@
-// routes/appointments.js
 const express = require('express');
-const Appointment = require('../models/Appointment');
 const router = express.Router();
+const Appointment = require('../models/Appointment');
 
-// POST: Create an appointment
+// POST: Create a new appointment
 router.post('/', async (req, res) => {
-  const { doctorName, specialty, patientName, email, phone, date, time } = req.body;
-
-  if (!doctorName || !specialty || !patientName || !email || !phone || !date || !time) {
-    return res.status(400).json({ error: 'All fields are required' });
-  }
-
   try {
-    const newAppointment = new Appointment({
-      doctorName,
-      specialty,
-      patientName,
-      email,
-      phone,
-      date,
-      time,
-    });
-
+    const newAppointment = new Appointment(req.body);
     await newAppointment.save();
-
-    res.status(201).json({ message: 'Appointment booked successfully!', appointment: newAppointment });
-  } catch (err) {
-    console.error('Error booking appointment:', err);
-    res.status(500).json({ error: 'Failed to book appointment' });
+    res.status(201).json({ message: 'Appointment booked successfully!' });
+  } catch (error) {
+    console.error('Error saving appointment:', error);
+    res.status(500).json({ error: 'Something went wrong. Try again.' });
   }
 });
 
